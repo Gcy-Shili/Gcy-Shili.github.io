@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/butterfly-icon.png">
 <meta property="article:published_time" content="2024-12-27T17:38:43.000Z">
-<meta property="article:modified_time" content="2024-12-28T17:10:07.161Z">
+<meta property="article:modified_time" content="2024-12-28T17:57:52.518Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/12/28/Language-Model-Overview/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
@@ -145,7 +145,7 @@
   isHighlightShrink: false,
   isToc: true,
   isShuoshuo: false
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post type-Language Model" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">Language Model Overview</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Language Model Overview</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-27T17:38:43.000Z" title="发表于 2024-12-28 01:38:43">2024-12-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-28T17:10:07.161Z" title="更新于 2024-12-29 01:10:07">2024-12-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="关于-Language-Model-的综述报告"><a href="#关于-Language-Model-的综述报告" class="headerlink" title="关于 Language Model 的综述报告"></a>关于 Language Model 的综述报告</h1><h2 id="1-语言模型"><a href="#1-语言模型" class="headerlink" title="1. 语言模型"></a>1. 语言模型</h2><p>语言模型（Language Model, LM）是用于<strong>建模自然语言的概率模型</strong>，简单来说，其任务就是评估一个给定的词序列（即一个句子）在真实世界中出现的概率，或者说，<strong>对于任意的词序列，这个模型能够计算出这个序列是一句话的概率。</strong></p>
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post type-Language Model" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">Language Model Overview</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Language Model Overview</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-27T17:38:43.000Z" title="发表于 2024-12-28 01:38:43">2024-12-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-28T17:57:52.518Z" title="更新于 2024-12-29 01:57:52">2024-12-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="关于-Language-Model-的综述报告"><a href="#关于-Language-Model-的综述报告" class="headerlink" title="关于 Language Model 的综述报告"></a>关于 Language Model 的综述报告</h1><h2 id="1-语言模型"><a href="#1-语言模型" class="headerlink" title="1. 语言模型"></a>1. 语言模型</h2><p>语言模型（Language Model, LM）是用于<strong>建模自然语言的概率模型</strong>，简单来说，其任务就是评估一个给定的词序列（即一个句子）在真实世界中出现的概率，或者说，<strong>对于任意的词序列，这个模型能够计算出这个序列是一句话的概率。</strong></p>
 <p>给定一个词表 $V$，<strong>LM</strong> 应当能计算出任意单词序列 $w_1, w_2, …, w_n$ 是一句话的概率 </p>
 <script type="math/tex; mode=display">
 p(w_1, w_2, ..., w_n)</script><p>而该公式也可以写成</p>
@@ -153,7 +153,13 @@ p(w_1, w_2, ..., w_n)</script><p>而该公式也可以写成</p>
 \begin{align}
 p(w_1, w_2, ..., w_n) &= p(w_1) \cdot p(w_2|w_1) \cdot p(w_3|w_1,w_2) ... p(w_n|w_2,...,w_{n-1}) \\
                       &= p(w_1) \prod_{i=2}^{n} p(w_i|w_1, ..., w_{i-1})
-\end{align}</script><p>如果模型能够有效地计算每一个 $p(w<em>i|w_1, …, w</em>{i-1})$，即<strong>当前单词在前面所有单词条件下</strong>出现的概率，那么它就能够轻松地计算出整个词序列的概率 $p(w<em>1, w_2, …, w_n)$，因此，语言模型也常被描述为能够计算 $p(w_i|w_1, …, w</em>{i-1})$ 的模型。</p>
+\end{align}</script><p>如果模型能够有效地计算每一个 </p>
+<script type="math/tex; mode=display">
+p(w_i|w_1, ..., w_{i-1})</script><p>即<strong>当前单词在前面所有单词条件下</strong>出现的概率，那么它就能够轻松地计算出整个词序列的概率 </p>
+<script type="math/tex; mode=display">
+p(w_1, w_2, ..., w_n)</script><p>因此，语言模型也常被描述为能够计算 </p>
+<script type="math/tex; mode=display">
+p(w_i|w_1, ..., w_{i-1})</script><p>的模型。</p>
 <p>从文本生成的角度来看，语言模型可以被定义为：给定一个短语（可以是一个词组或一句话），语言模型能够预测下一个最有可能出现的词。这意味着，语言模型不仅能够评估句子的概率，还可以用于生成连贯的文本。</p>
 <h2 id="2-N-gram-模型"><a href="#2-N-gram-模型" class="headerlink" title="2. N-gram 模型"></a>2. N-gram 模型</h2><p>在语言模型的框架下，<strong>N-gram 语言模型</strong> 是一种基于统计的方法，用于预测序列中下一个词的出现概率。N-gram 模型通过考察前面 <strong>N−1</strong>个词来预测当前词，从而简化了语言模型的复杂性</p>
 <p><strong>N-gram</strong> 指的是序列中的 N 个连续词汇。根据 <strong>N</strong> 的不同，N-gram 模型可以分为：</p>
@@ -170,9 +176,16 @@ p(w_i∣w_1,w_2,…,w_{i−1}) \approx p(w_i∣w_{i−N},…,w_{i−1})</script>
 p(w_1,w_2,...,w_n) \approx p(w_1)...p(w_N|w_{N-1},...,w_{1}) \prod_{i=N+1}^{n}p(w_i|w_{i-N},...,w_{i-1})</script><h3 id="2-1-N-gram-模型的构建"><a href="#2-1-N-gram-模型的构建" class="headerlink" title="2.1. N-gram 模型的构建"></a>2.1. N-gram 模型的构建</h3><h4 id="a-词表构建"><a href="#a-词表构建" class="headerlink" title="a. 词表构建"></a>a. 词表构建</h4><p>首先，需要确定词表 $V$ 的大小,通常会对语料库进行预处理，包括分词、去停用词、低频词替换（如用 <code>&lt;UNK&gt;</code> 表示未知词）等，以控制词表的规模。</p>
 <h4 id="b-计数统计"><a href="#b-计数统计" class="headerlink" title="b. 计数统计"></a>b. 计数统计</h4><p>统计语料库中所有可能的 N-gram 出现次数。具体来说：</p>
 <ul>
-<li>对于每一个 N-gram $(w<em>{i-(N-1)}, \ldots, w_i)$，统计其出现次数 $C(w</em>{i-(N-1)}, \ldots, w_i)$</li>
-<li>同时，统计 $(N-1)$-gram 的出现次数 $C(w<em>{i-(N-1)}, \ldots, w</em>{i-1})$<h4 id="c-概率估计"><a href="#c-概率估计" class="headerlink" title="c. 概率估计"></a>c. 概率估计</h4>使用<strong>最大似然估计</strong>来估计条件概率：</li>
+<li>对于每一个 N-gram </li>
 </ul>
+<script type="math/tex; mode=display">
+(w_{i-(N-1)}, \ldots, w_i)</script><p>统计其出现次数 </p>
+<script type="math/tex; mode=display">
+C(w_{i-(N-1)}, \ldots, w_i)</script><ul>
+<li>同时，统计 (N-1)-gram 的出现次数 </li>
+</ul>
+<script type="math/tex; mode=display">
+C(w_{i-(N-1)}, \ldots, w_{i-1})</script><h4 id="c-概率估计"><a href="#c-概率估计" class="headerlink" title="c. 概率估计"></a>c. 概率估计</h4><p>使用<strong>最大似然估计</strong>来估计条件概率：</p>
 <script type="math/tex; mode=display">
 p(w_i | w_{i-(N-1)}, \ldots, w_{i-1}) = \frac{C(w_{i-(N-1)}, \ldots, w_i)}{C(w_{i-(N-1)}, \ldots, w_{i-1})}</script><h4 id="d-平滑处理"><a href="#d-平滑处理" class="headerlink" title="d. 平滑处理"></a>d. 平滑处理</h4><p>由于实际语料中可能存在未见过的 $N$-gram，为了避免概率为零的问题，需要进行平滑处理。常见的平滑方法包括：</p>
 <ul>
