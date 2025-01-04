@@ -46,7 +46,7 @@
       <link href="/2025/01/03/KV-cache/"/>
       <url>/2025/01/03/KV-cache/</url>
       
-        <content type="html"><![CDATA[<h1 id="KV-cache"><a href="#KV-cache" class="headerlink" title="KV cache"></a>KV cache</h1><p>参考链接：</p><p><a href="https://zhuanlan.zhihu.com/p/662498827">https://zhuanlan.zhihu.com/p/662498827</a></p><p><a href="https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/12.pdf">https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/12.pdf</a></p><hr><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p><strong>KV cache</strong> 是 Transformer 标配的推理加速功能，只能用于 Decoder 架构的模型，由于其自回归的特性，推理时前面已经生成的字符不需要与后面的字符产生 attention（从而使得前面已经计算的 K 和 V 可以缓存起来）；模型每次推理时只会预测输出一个 token，执行多次后完成全部输出，（模型的输出也会作为后续生成的输入）而相邻前后两次输入只相差一个 token，这就导致出现了大量计算的重复。而 KV cache 就是将每个 token 可复用的 $K$ 和 $V$ 向量结果保存下来复用，将计算复杂度从 $O(n^2)$降低为 $O(n)$。</p><h2 id="为什么需要KV-cache"><a href="#为什么需要KV-cache" class="headerlink" title="为什么需要KV cache"></a>为什么需要KV cache</h2><p>首先回顾下注意力计算的公式：</p><script type="math/tex; mode=display">\texttt{attention} = \texttt{softmax} (\frac{QK^T}{\sqrt{d}}) V</script>]]></content>
+        <content type="html"><![CDATA[<h1 id="KV-cache"><a href="#KV-cache" class="headerlink" title="KV cache"></a>KV cache</h1><p>参考链接：</p><p><a href="https://zhuanlan.zhihu.com/p/662498827">https://zhuanlan.zhihu.com/p/662498827</a></p><p><a href="https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/12.pdf">https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/12.pdf</a></p><hr><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p><strong>KV cache</strong> 是 Transformer 标配的推理加速功能，只能用于 Decoder 架构的模型，由于其自回归的特性，推理时前面已经生成的字符不需要与后面的字符产生 attention（从而使得前面已经计算的 K 和 V 可以缓存起来）；模型每次推理时只会预测输出一个 token，执行多次后完成全部输出，（模型的输出也会作为后续生成的输入）而相邻前后两次输入只相差一个 token，这就导致出现了大量计算的重复。而 KV cache 就是将每个 token 可复用的 $K$ 和 $V$ 向量结果保存下来复用，将计算复杂度从 $O(n^2)$降低为 $O(n)$。</p><h2 id="为什么需要KV-cache"><a href="#为什么需要KV-cache" class="headerlink" title="为什么需要KV cache"></a>为什么需要KV cache</h2><p>首先回顾下注意力计算的公式：</p><script type="math/tex; mode=display">\texttt{attention} = \texttt{softmax} (\frac{QK^T}{\sqrt{d_k}}) V</script>]]></content>
       
       
       
@@ -103,7 +103,7 @@
       <link href="/2024/12/31/Yorushika/"/>
       <url>/2024/12/31/Yorushika/</url>
       
-        <content type="html"><![CDATA[<h2 id="年度歌单！"><a href="#年度歌单！" class="headerlink" title="年度歌单！"></a>年度歌单！</h2>    <div id="aplayer-XHPvfqWU" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="13053912212" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><p>suis is all you need🥰</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="年度歌单！"><a href="#年度歌单！" class="headerlink" title="年度歌单！"></a>年度歌单！</h2>    <div id="aplayer-IJMYKVxN" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="13053912212" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><p>suis is all you need🥰</p>]]></content>
       
       
       
