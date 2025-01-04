@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>Understanding from attention to self-attention</title>
+      <link href="/2025/01/04/Understanding-from-attention-to-self-attention/"/>
+      <url>/2025/01/04/Understanding-from-attention-to-self-attention/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>前情提要🤓：<br>在NLP领域早期引入注意力机制的是论文<a href="https://arxiv.org/abs/1409.0473v7">Neural Machine Translation by Jointly Learning to Align and Translate</a>，通过引入对齐这一思想，将<strong>软注意力</strong>（通过应用注意力权重）机制添加到解码器中，使文本翻译能够更好地在源语言和目标语言上对齐，从而提高翻译性能。</p></blockquote><h2 id="传统注意力机制"><a href="#传统注意力机制" class="headerlink" title="传统注意力机制"></a>传统注意力机制</h2><p>首先对于这个 <code>Seq2Seq</code> 模型，其编码器解码器都基于RNN，将注意力添加在解码器时，它接受 $t$ 时间步的RNN的隐藏层输出 $h_t$ 和所有编码器的隐藏层向量 $hs$</p><p>使用目前最经常说的 $QKV$ 模式来说，$t$ 时间步的RNN的隐藏层输出 $h_t$ 就可以看做一个查询向量 $q$，它要去查询编码器向量中哪个向量与自己的相关性最高，那么 $q$ 要查询的对象就是 $hs$（$K$）</p><p>通过计算得到注意力权重 $\alpha<em>n$ 后，再将 $hs$ 与 $\alpha_n$ 加权求和最终得到上下文向量 $c_t$（此时并没有用到 $V$，在<strong>键值对注意力</strong>中将 $(k</em>{1…n},v<em>{1…n})$ 作为输入，则加权求和时使用的就是 $v$ ，这里的输入可以简单视为 $(k</em>{1…n})$，关于注意力的详细介绍与键值对注意力具体可见：<a href="https://blog.csdn.net/2303_76215922/article/details/144117689">关于注意力机制的详细理解与公式介绍</a>）</p><p>这个上下文向量就包含了对<strong>输入源语言序列</strong>的全局理解与加权信息（可以判断自己与源序列哪里更相关），从而为生成目标语言提供更好的依据</p><p>简单来说就是，走到当前需要输出某个翻译出来的词的时间步时，经过RNN处理的 $h_t$ 去编码器里的所有隐藏向量里都看一下对比一下，根据全局比较和集中注意生成一个上下文向量，这个上下文向量包含了<strong>与之最相关的源语言信息</strong>，其主要来源于源语言序列（例如，待翻译的英文句子）的编码器隐藏状态，这意味着每个上下文向量都专注于源语言中与当前解码步骤最相关的部分</p><h2 id="自注意力机制"><a href="#自注意力机制" class="headerlink" title="自注意力机制"></a>自注意力机制</h2><p>与传统注意力机制对应的，对于<strong>自注意力机制</strong>而言，上下文向量则是包含了与自身序列的上下文最相关的信息，上下文向量来源于<strong>同一序列内部</strong>的不同位置，这使得每个输出向量不仅包含了自身的信息，还融合了与其相关的其他位置的信息，从而实现对整个序列的全局理解</p><p>假设有一个输入序列 $X=[x<em>{1…n}]$，每一个向量 $x_i$ 都向整个序列（$k$）去发出查询（$q$），得到一系列的注意力权重 $\alpha</em>{ni}$，再将其与输入序列对应的值向量 $v$ 加权求和，最后得到一系列的上下文向量 $c_{tn}$</p><blockquote><p>这里有一个问题，就是为什么需要有一个与 $k$ 不同的 $v$ 向量来进行加权求和，而不是继续使用 $k$，这也是一道比较常见的面试题了，挖个坑以后回来补</p></blockquote><p>接下来我们来看自注意力的具体计算过程：</p><p>输入序列 $X=[x<em>{1…N}] \in \mathbb{R}^{D_x \times N}$，输出序列 $H=[h</em>{1…N}] \in \mathbb{R}^{D_v \times N}$<br>有三个线性变换矩阵 $W_q,W_k,W_v$<br>将输入序列 $X$ 分别与 $W_q,W_k,W_v$ 矩阵进行线性变换：</p><script type="math/tex; mode=display">Q = W_qX \in \mathbb{R}^{D_k \times N} \\K = W_kX \in \mathbb{R}^{D_k \times N} \\V = W_vX \in \mathbb{R}^{D_v \times N}</script><p>$QKV$ 矩阵分别是由查询向量，键向量与值向量构成的矩阵</p><p>对于每一个查询向量 $q_n \in Q$，利用键值对注意力机制的计算：</p><script type="math/tex; mode=display">\begin{align*}h_n = attn((\mathbf{K,V}), q_n) &= \sum_{j=1}^{N} \alpha_{nj} \pmb{v_j} \\&= \sum_{j=1}^{N} softmax(score(k_j, q_n)) \pmb{v_n}\end{align*}</script><p>其中 $score$ 为注意力打分函数</p><p>如果使用缩放点积注意力，则输出 $H$ 可简单表示为：</p><script type="math/tex; mode=display"> H = \pmb{V} \text{softmax}(\frac{K^TQ}{\sqrt{D_k}})</script><p>其中 $\text{softmax}(\cdot)$ 为按列归一化的函数</p><p>自注意力计算的权重 $a_{ij}$ 只依赖于 $q_i$ 和 $k_j$ 的相关性，而忽略了输入信息的位置信息，因此在单独使用时需要引入位置编码信息进行修正（Transformer），自注意力也可以扩展为多头自注意力，在多个不同的投影空间中捕捉不同的交互信息</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Attention </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>KV cache</title>
+      <link href="/2025/01/03/KV-cache/"/>
+      <url>/2025/01/03/KV-cache/</url>
+      
+        <content type="html"><![CDATA[<h1 id="KV-cache"><a href="#KV-cache" class="headerlink" title="KV cache"></a>KV cache</h1><p>参考链接：</p><p><a href="https://zhuanlan.zhihu.com/p/662498827">https://zhuanlan.zhihu.com/p/662498827</a></p><p><a href="https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/12.pdf">https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/12.pdf</a></p><hr><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p><strong>KV cache</strong> 是 Transformer 标配的推理加速功能，只能用于 Decoder 架构的模型，由于其自回归的特性，推理时前面已经生成的字符不需要与后面的字符产生 attention（从而使得前面已经计算的 K 和 V 可以缓存起来）；模型每次推理时只会预测输出一个 token，执行多次后完成全部输出，（模型的输出也会作为后续生成的输入）而相邻前后两次输入只相差一个 token，这就导致出现了大量计算的重复。而 KV cache 就是将每个 token 可复用的 $K$ 和 $V$ 向量结果保存下来复用，将计算复杂度从 $O(n^2)$降低为 $O(n)$。</p><h2 id="为什么需要KV-cache"><a href="#为什么需要KV-cache" class="headerlink" title="为什么需要KV cache"></a>为什么需要KV cache</h2><p>首先回顾下注意力计算的公式：</p><script type="math/tex; mode=display">\texttt{attention} = \texttt{softmax} (\frac{QK^T}{\sqrt{d}}) V</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> LLM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>COSTAR</title>
       <link href="/2025/01/03/Learning-Prompt-Pt.2/"/>
       <url>/2025/01/03/Learning-Prompt-Pt.2/</url>
@@ -46,7 +84,7 @@
       <link href="/2024/12/31/Yorushika/"/>
       <url>/2024/12/31/Yorushika/</url>
       
-        <content type="html"><![CDATA[<h2 id="年度歌单！"><a href="#年度歌单！" class="headerlink" title="年度歌单！"></a>年度歌单！</h2>    <div id="aplayer-tLtRWByc" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="13053912212" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><p>suis is all you need🥰</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="年度歌单！"><a href="#年度歌单！" class="headerlink" title="年度歌单！"></a>年度歌单！</h2>    <div id="aplayer-kRQizweB" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="13053912212" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><p>suis is all you need🥰</p>]]></content>
       
       
       
